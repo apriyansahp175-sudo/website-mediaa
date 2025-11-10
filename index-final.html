@@ -1,0 +1,2867 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaksi Eksoterm dan Endoterm - Pembelajaran Kimia Interaktif</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS yang sama seperti sebelumnya */
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent1: #4cc9f0;
+            --accent2: #f72585;
+            --accent3: #7209b7;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --warning: #ffcc00;
+            --danger: #dc3545;
+            --exo-color: #f72585;
+            --endo-color: #4cc9f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,128L48,138.7C96,149,192,171,288,170.7C384,171,480,149,576,128C672,107,768,85,864,96C960,107,1056,149,1152,149.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        .scene-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .scene-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .scene-title {
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent1);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .scene-title i {
+            font-size: 1.5rem;
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .menu-card {
+            background: linear-gradient(135deg, var(--light) 0%, #e9ecef 100%);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .menu-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent1) 100%);
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .menu-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .menu-card h3 {
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        .menu-card.locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+            position: relative;
+        }
+        
+        .menu-card.locked::after {
+            content: "\f023";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: var(--danger);
+            background: rgba(255, 255, 255, 0.8);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+        
+        .problem-box {
+            background: #e9f7fe;
+            border-left: 5px solid var(--accent1);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .materi-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .materi-card {
+            border-radius: 10px;
+            padding: 25px;
+            color: white;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .materi-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.1);
+        }
+        
+        .materi-card.exo {
+            background: linear-gradient(135deg, var(--exo-color) 0%, #b5179e 100%);
+        }
+        
+        .materi-card.endo {
+            background: linear-gradient(135deg, var(--endo-color) 0%, #4895ef 100%);
+        }
+        
+        .materi-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+        
+        .materi-content {
+            position: relative;
+        }
+        
+        .materi-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .materi-content li {
+            margin-bottom: 8px;
+        }
+        
+        .example-box {
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .hypothesis-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .hypothesis-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px dashed #dee2e6;
+        }
+        
+        .hypothesis-card.exo {
+            border-color: var(--exo-color);
+        }
+        
+        .hypothesis-card.endo {
+            border-color: var(--endo-color);
+        }
+        
+        .hypothesis-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .hypothesis-title.exo {
+            color: var(--exo-color);
+        }
+        
+        .hypothesis-title.endo {
+            color: var(--endo-color);
+        }
+        
+        .option-group {
+            margin-bottom: 15px;
+        }
+        
+        .option-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .option-select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            background: white;
+        }
+        
+        .input-text {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            background: white;
+        }
+        
+        .simulation-area {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .instructions-panel {
+            background: #e3f2fd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .instructions-panel h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .instructions-list {
+            margin-left: 20px;
+        }
+        
+        .instructions-list li {
+            margin-bottom: 8px;
+        }
+        
+        .chemicals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .chemical-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            position: relative;
+        }
+        
+        .chemical-card:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+        }
+        
+        .chemical-card.selected {
+            border-color: var(--primary);
+            background: #e3f2fd;
+        }
+        
+        .chemical-card.exo::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--exo-color);
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .chemical-card.endo::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--endo-color);
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .lab-setup {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            align-items: flex-end;
+        }
+        
+        .beaker-container {
+            text-align: center;
+        }
+        
+        .beaker {
+            width: 150px;
+            height: 200px;
+            position: relative;
+            background: linear-gradient(to bottom, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 0 0 20px 20px;
+            border: 5px solid #90caf9;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 0%;
+            transition: height 1s ease, background 1s ease;
+        }
+        
+        .liquid.exo {
+            background: linear-gradient(to top, var(--exo-color) 0%, #ff8a80 100%);
+        }
+        
+        .liquid.endo {
+            background: linear-gradient(to top, var(--endo-color) 0%, #82b1ff 100%);
+        }
+        
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+            opacity: 0;
+        }
+        
+        .thermometer-container {
+            text-align: center;
+        }
+        
+        .thermometer {
+            width: 30px;
+            height: 180px;
+            background: white;
+            border: 2px solid #ccc;
+            border-radius: 15px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mercury {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, #b71c1c 0%, #f44336 100%);
+            transition: height 1.5s ease;
+        }
+        
+        .temperature-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #3a9d38 100%);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger) 0%, #c82333 100%);
+            color: white;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .data-table th, .data-table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .data-table th {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .data-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .data-table input, .data-table select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .conclusion-area {
+            background: #e8f5e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .conclusion-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .conclusion-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .conclusion-card h4 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+        
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        
+        .quiz-title {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+        
+        .quiz-progress {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .quiz-progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        .option {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .option:hover {
+            border-color: var(--accent1);
+            background: #f0f8ff;
+        }
+        
+        .option.selected {
+            border-color: var(--primary);
+            background: #e3f2fd;
+        }
+        
+        .option.correct {
+            border-color: var(--success);
+            background: #e8f5e9;
+        }
+        
+        .option.incorrect {
+            border-color: var(--danger);
+            background: #ffebee;
+        }
+        
+        .option-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .option.selected .option-number {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .result-container {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .result-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+        
+        .result-message {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .energy-diagram {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            margin: 30px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .diagram-axis {
+            position: absolute;
+            bottom: 50px;
+            left: 80px;
+            width: calc(100% - 100px);
+            height: 2px;
+            background: var(--dark);
+        }
+        
+        .diagram-y-axis {
+            position: absolute;
+            bottom: 50px;
+            left: 80px;
+            width: 2px;
+            height: calc(100% - 100px);
+            background: var(--dark);
+        }
+        
+        .diagram-label {
+            position: absolute;
+            font-size: 0.9rem;
+        }
+        
+        .energy-level {
+            position: absolute;
+            left: 80px;
+            width: calc(100% - 100px);
+            height: 2px;
+            background: rgba(0,0,0,0.2);
+        }
+        
+        .reaction-path {
+            position: absolute;
+            left: 150px;
+            width: 200px;
+            height: 0;
+            border-left: 2px dashed var(--dark);
+            transition: height 1.5s ease;
+        }
+        
+        .reaction-path.exo {
+            border-color: var(--exo-color);
+        }
+        
+        .reaction-path.endo {
+            border-color: var(--endo-color);
+        }
+        
+        .reaction-point {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .reaction-point.reactants {
+            background: var(--primary);
+        }
+        
+        .reaction-point.products {
+            background: var(--accent3);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent1);
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+        
+        .essay-question {
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .essay-question label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .essay-question textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            resize: vertical;
+            min-height: 100px;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+        
+        .essay-question textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+        
+        .saved-indicator {
+            color: var(--success);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .saved-indicator.show {
+            opacity: 1;
+        }
+        
+        .error-message {
+            color: var(--danger);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .error-message.show {
+            opacity: 1;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .scene-indicator {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            display: flex;
+            background: #e9ecef;
+            border-radius: 50px;
+            padding: 5px;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .progress-step {
+            flex: 1;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin: 0 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active {
+            background: var(--primary);
+        }
+        
+        .progress-step.completed {
+            background: var(--success);
+        }
+        
+        .completion-message {
+            background: linear-gradient(135deg, var(--success) 0%, #3a9d38 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .completion-message.show {
+            display: block;
+        }
+        
+        .observation-table {
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .observation-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .observation-table th {
+            background: var(--primary);
+            color: white;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .observation-table td {
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+        }
+        
+        .observation-table input, .observation-table select {
+            width: 90%;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .observation-table .chemical-cell {
+            font-weight: bold;
+        }
+        
+        .observation-table .suhu-awal {
+            background: #f8f9fa;
+        }
+        
+        /* Styling untuk review kuis */
+        .quiz-review {
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .review-title {
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .review-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .review-item.incorrect {
+            border-left-color: var(--danger);
+            background: #fff5f5;
+        }
+        
+        .review-item.correct {
+            border-left-color: var(--success);
+            background: #f0fff4;
+        }
+        
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .review-answer {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .review-answer.user {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+        }
+        
+        .review-answer.correct {
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+        }
+        
+        .answer-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .answer-icon.correct {
+            color: var(--success);
+        }
+        
+        .answer-icon.incorrect {
+            color: var(--danger);
+        }
+        
+        .review-explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent1);
+        }
+        
+        .review-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-20px) translateX(10px);
+            }
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hypothesis-form, .conclusion-form, .materi-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .lab-setup {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-buttons button {
+                width: 100%;
+            }
+            
+            .observation-table {
+                font-size: 0.9rem;
+            }
+            
+            .observation-table input, .observation-table select {
+                width: 100%;
+                font-size: 0.9rem;
+            }
+            
+            .review-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-particles" id="floating-particles"></div>
+    
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-atom"></i> Reaksi Eksoterm dan Endoterm</h1>
+            <p class="subtitle">Menyelidiki Perubahan Energi dalam Reaksi Kimia</p>
+        </header>
+        
+        <!-- Progress Indicator -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-step completed" id="step-1"></div>
+                <div class="progress-step" id="step-2"></div>
+                <div class="progress-step" id="step-3"></div>
+                <div class="progress-step" id="step-4"></div>
+                <div class="progress-step" id="step-5"></div>
+                <div class="progress-step" id="step-6"></div>
+                <div class="progress-step" id="step-7"></div>
+                <div class="progress-step" id="step-8"></div>
+            </div>
+        </div>
+        
+        <!-- Completion Message -->
+        <div class="completion-message" id="completion-message">
+            <h3><i class="fas fa-trophy"></i> Selamat! Anda telah menyelesaikan pembelajaran ini!</h3>
+            <p>Klik tombol di bawah untuk kembali ke menu utama atau ulangi kuis.</p>
+        </div>
+        
+        <!-- Scene 1: Orientasi -->
+        <section id="scene-orientasi" class="scene-container">
+            <h2 class="scene-title"><i class="fas fa-compass"></i> Orientasi</h2>
+            <div class="problem-box">
+                <h3><i class="fas fa-fire"></i> REAKSI EKSOTERM DAN ENDOTERM</h3>
+                <p>Selamat datang dalam petualangan sains! Dalam pembelajaran ini, kita akan menjelajahi dunia reaksi kimia yang melepaskan atau menyerap energi. Mari kita selidiki bagaimana energi berperan dalam perubahan kimia!</p>
+            </div>
+            
+            <div class="materi-container">
+                <div class="materi-card exo">
+                    <h3 class="materi-title"><i class="fas fa-fire"></i> Reaksi Eksoterm</h3>
+                    <div class="materi-content">
+                        <p>Reaksi eksoterm adalah reaksi yang melepaskan energi ke lingkungan, biasanya dalam bentuk panas.</p>
+                        <div class="example-box">
+                            <h4><i class="fas fa-lightbulb"></i> Contoh:</h4>
+                            <ul>
+                                <li>Pembakaran kayu</li>
+                                <li>Reaksi logam dengan asam</li>
+                                <li>Respirasi sel</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="materi-card endo">
+                    <h3 class="materi-title"><i class="fas fa-snowflake"></i> Reaksi Endoterm</h3>
+                    <div class="materi-content">
+                        <p>Reaksi endoterm adalah reaksi yang menyerap energi dari lingkungan, menyebabkan penurunan suhu.</p>
+                        <div class="example-box">
+                            <h4><i class="fas fa-lightbulb"></i> Contoh:</h4>
+                            <ul>
+                                <li>Fotosintesis</li>
+                                <li>Pelarutan ammonium nitrat</li>
+                                <li>Es mencair</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-primary" disabled><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                <button class="btn btn-success" onclick="nextScene()">Materi Pembelajaran <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </section>
+        
+        <!-- Scene 2: Materi Pembelajaran -->
+        <section id="scene-materi" class="scene-container hidden">
+            <h2 class="scene-title"><i class="fas fa-book-open"></i> Materi Pembelajaran</h2>
+            
+            <div class="problem-box">
+                <h3>Konsep Dasar Reaksi Eksoterm dan Endoterm</h3>
+                <p>Setiap reaksi kimia melibatkan perubahan energi. Berdasarkan perubahan energi tersebut, reaksi kimia dikategorikan menjadi dua jenis utama.</p>
+            </div>
+            
+            <div class="materi-container">
+                <div class="materi-card exo">
+                    <h3 class="materi-title"><i class="fas fa-fire"></i> Reaksi Eksoterm</h3>
+                    <div class="materi-content">
+                        <p><strong>Reaksi eksoterm</strong> adalah reaksi kimia yang melepaskan energi ke lingkungan, biasanya dalam bentuk panas. Pada reaksi ini, energi produk lebih rendah daripada energi reaktan.</p>
+                        
+                        <h4>Ciri-ciri:</h4>
+                        <ul>
+                            <li>Suhu lingkungan naik</li>
+                            <li>Energi berpindah dari sistem ke lingkungan</li>
+                            <li>Perubahan entalpi (ΔH) negatif</li>
+                            <li>Contoh: pembakaran, respirasi, netralisasi</li>
+                        </ul>
+                        
+                        <h4>Diagram Tingkat Energi:</h4>
+                        <div class="energy-diagram" id="diagram-exo">
+                            <!-- Diagram akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="materi-card endo">
+                    <h3 class="materi-title"><i class="fas fa-snowflake"></i> Reaksi Endoterm</h3>
+                    <div class="materi-content">
+                        <p><strong>Reaksi endoterm</strong> adalah reaksi kimia yang menyerap energi dari lingkungan, menyebabkan penurunan suhu. Pada reaksi ini, energi produk lebih tinggi daripada energi reaktan.</p>
+                        
+                        <h4>Ciri-ciri:</h4>
+                        <ul>
+                            <li>Suhu lingkungan turun</li>
+                            <li>Energi berpindah dari lingkungan ke sistem</li>
+                            <li>Perubahan entalpi (ΔH) positif</li>
+                            <li>Contoh: fotosintesis, penguapan, dekomposisi</li>
+                        </ul>
+                        
+                        <h4>Diagram Tingkat Energi:</h4>
+                        <div class="energy-diagram" id="diagram-endo">
+                            <!-- Diagram akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h3>Perbandingan Reaksi Eksoterm dan Endoterm</h3>
+                <table class="data-table">
+                    <tr>
+                        <th>Aspek</th>
+                        <th>Reaksi Eksoterm</th>
+                        <th>Reaksi Endoterm</th>
+                    </tr>
+                    <tr>
+                        <td>Perubahan Suhu</td>
+                        <td>Suhu naik</td>
+                        <td>Suhu turun</td>
+                    </tr>
+                    <tr>
+                        <td>Aliran Energi</td>
+                        <td>Sistem → Lingkungan</td>
+                        <td>Lingkungan → Sistem</td>
+                    </tr>
+                    <tr>
+                        <td>Perubahan Entalpi (ΔH)</td>
+                        <td>ΔH < 0 (Negatif)</td>
+                        <td>ΔH > 0 (Positif)</td>
+                    </tr>
+                    <tr>
+                        <td>Energi Produk vs Reaktan</td>
+                        <td>E<sub>produk</sub> < E<sub>reaktan</sub></td>
+                        <td>E<sub>produk</sub> > E<sub>reaktan</sub></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-primary" onclick="prevScene()"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                <button class="btn btn-success" onclick="nextScene()">Perumusan Masalah <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </section>
+        
+        <!-- Scene 3: Perumusan Masalah -->
+        <section id="scene-masalah" class="scene-container hidden">
+            <h2 class="scene-title"><i class="fas fa-question-circle"></i> Perumusan Masalah</h2>
+            <div class="problem-box">
+                <h3>MASALAH YANG AKAN KITA SELIDIKI:</h3>
+                <p>Bagaimana karakteristik reaksi kimia yang:</p>
+                <ul>
+                    <li><strong>Melepas kalor (EKSOTERM)</strong> dan</li>
+                    <li><strong>Menyerap kalor (ENDOTERM)</strong></li>
+                </ul>
+                <p>ditinjau dari:</p>
+                <ul>
+                    <li>Perubahan suhu</li>
+                    <li>Aliran energi</li>
+                    <li>Diagram tingkat energi</li>
+                </ul>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <h3>Pertanyaan Penelitian:</h3>
+                
+                <div class="essay-question">
+                    <label for="masalah-1">1. Bagaimana cara membedakan reaksi eksoterm dan endoterm berdasarkan perubahan suhu?</label>
+                    <textarea id="masalah-1" placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                    <div class="saved-indicator" id="saved-masalah-1"><i class="fas fa-check-circle"></i> Jawaban tersimpan</div>
+                    <div class="error-message" id="error-masalah-1"><i class="fas fa-exclamation-circle"></i> Jawaban harus diisi</div>
+                </div>
+                
+                <div class="essay-question">
+                    <label for="masalah-2">2. Apa yang terjadi pada aliran energi dalam kedua jenis reaksi tersebut?</label>
+                    <textarea id="masalah-2" placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                    <div class="saved-indicator" id="saved-masalah-2"><i class="fas fa-check-circle"></i> Jawaban tersimpan</div>
+                    <div class="error-message" id="error-masalah-2"><i class="fas fa-exclamation-circle"></i> Jawaban harus diisi</div>
+                </div>
+                
+                <div class="essay-question">
+                    <label for="masalah-3">3. Bagaimana bentuk diagram tingkat energi untuk reaksi eksoterm dan endoterm?</label>
+                    <textarea id="masalah-3" placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                    <div class="saved-indicator" id="saved-masalah-3"><i class="fas fa-check-circle"></i> Jawaban tersimpan</div>
+                    <div class="error-message" id="error-masalah-3"><i class="fas fa-exclamation-circle"></i> Jawaban harus diisi</div>
+                </div>
+                
+                <div class="essay-question">
+                    <label for="masalah-4">4. Apa contoh reaksi eksoterm dan endoterm dalam kehidupan sehari-hari?</label>
+                    <textarea id="masalah-4" placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                    <div class="saved-indicator" id="saved-masalah-4"><i class="fas fa-check-circle"></i> Jawaban tersimpan</div>
+                    <div class="error-message" id="error-masalah-4"><i class="fas fa-exclamation-circle"></i> Jawaban harus diisi</div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-success" onclick="saveMasalahAnswers()"><i class="fas fa-save"></i> Simpan Semua Jawaban</button>
+                </div>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-primary" onclick="prevScene()"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                <button class="btn btn-success" onclick="nextScene()">Penyusunan Hipotesis <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </section>
+        
+        <!-- Scene 4: Penyusunan Hipotesis -->
+        <section id="scene-hipotesis" class="scene-container hidden">
+            <h2 class="scene-title"><i class="fas fa-lightbulb"></i> Penyusunan Hipotesis</h2>
+            <p>SUSUNAN HIPOTESIS KELOMPOK:</p>
+            
+            <div class="hypothesis-form">
+                <div class="hypothesis-card exo">
+                    <h3 class="hypothesis-title exo">Reaksi Eksoterm</h3>
+                    
+                    <div class="option-group">
+                        <label>Perubahan suhu:</label>
+                        <select class="option-select" id="exo-suhu">
+                            <option value="">Pilih salah satu</option>
+                            <option value="naik">Naik</option>
+                            <option value="turun">Turun</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Aliran energi:</label>
+                        <input type="text" class="input-text" id="exo-energi" placeholder="Tuliskan arah aliran energi...">
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Perubahan entalpi (ΔH):</label>
+                        <select class="option-select" id="exo-entapi">
+                            <option value="">Pilih salah satu</option>
+                            <option value="positif">Positif</option>
+                            <option value="negatif">Negatif</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Contoh reaksi:</label>
+                        <input type="text" class="input-text" id="exo-contoh" placeholder="Tuliskan contoh reaksi eksoterm...">
+                    </div>
+                </div>
+                
+                <div class="hypothesis-card endo">
+                    <h3 class="hypothesis-title endo">Reaksi Endoterm</h3>
+                    
+                    <div class="option-group">
+                        <label>Perubahan suhu:</label>
+                        <select class="option-select" id="endo-suhu">
+                            <option value="">Pilih salah satu</option>
+                            <option value="naik">Naik</option>
+                            <option value="turun">Turun</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Aliran energi:</label>
+                        <input type="text" class="input-text" id="endo-energi" placeholder="Tuliskan arah aliran energi...">
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Perubahan entalpi (ΔH):</label>
+                        <select class="option-select" id="endo-entapi">
+                            <option value="">Pilih salah satu</option>
+                            <option value="positif">Positif</option>
+                            <option value="negatif">Negatif</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Contoh reaksi:</label>
+                        <input type="text" class="input-text" id="endo-contoh" placeholder="Tuliskan contoh reaksi endoterm...">
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="checkHypothesis()"><i class="fas fa-check"></i> Periksa Hipotesis</button>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-primary" onclick="prevScene()"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                <button class="btn btn-success" onclick="nextScene()">Pengumpulan Data <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </section>
+        
+        <!-- Scene 5: Pengumpulan Data (Investigasi) -->
+        <section id="scene-investigasi" class="scene-container hidden">
+            <h2 class="scene-title"><i class="fas fa-flask"></i> Pengumpulan Data (Investigasi)</h2>
+            
+            <div class="instructions-panel">
+                <h4><i class="fas fa-info-circle"></i> Petunjuk Penggunaan Virtual Lab</h4>
+                <ol class="instructions-list">
+                    <li><strong>Pilih salah satu zat</strong> dari empat pilihan yang tersedia</li>
+                    <li>Klik tombol <strong>"Larutkan"</strong> untuk memulai simulasi pelarutan</li>
+                    <li><strong>Amati perubahan suhu</strong> pada termometer</li>
+                    <li><strong>Catat hasil pengamatan</strong> pada tabel yang tersedia</li>
+                    <li>Gunakan tombol <strong>"Ulangi"</strong> untuk mencoba zat lainnya</li>
+                    <li>Setelah selesai, lanjutkan ke bagian <strong>Analisis Data</strong></li>
+                </ol>
+            </div>
+            
+            <div class="simulation-area">
+                <h3>Pilih Zat untuk Dilarutkan:</h3>
+                
+                <div class="chemicals-grid">
+                    <div class="chemical-card exo" data-chemical="NaOH" data-type="exo">
+                        <i class="fas fa-vial" style="font-size: 2rem; color: #f72585;"></i>
+                        <h4>NaOH</h4>
+                        <p>Natrium Hidroksida</p>
+                    </div>
+                    <div class="chemical-card exo" data-chemical="CaCl2" data-type="exo">
+                        <i class="fas fa-vial" style="font-size: 2rem; color: #f72585;"></i>
+                        <h4>CaCl₂</h4>
+                        <p>Kalsium Klorida</p>
+                    </div>
+                    <div class="chemical-card endo" data-chemical="NH4NO3" data-type="endo">
+                        <i class="fas fa-vial" style="font-size: 2rem; color: #4cc9f0;"></i>
+                        <h4>NH₄NO₃</h4>
+                        <p>Ammonium Nitrat</p>
+                    </div>
+                    <div class="chemical-card endo" data-chemical="KCl" data-type="endo">
+                        <i class="fas fa-vial" style="font-size: 2rem; color: #4cc9f0;"></i>
+                        <h4>KCl</h4>
+                        <p>Kalium Klorida</p>
+                    </div>
+                </div>
+                
+                <div class="lab-setup">
+                    <div class="beaker-container">
+                        <h4>Gelas Kimia</h4>
+                        <div class="beaker">
+                            <div class="liquid" id="liquid"></div>
+                            <div class="particles" id="particles"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="thermometer-container">
+                        <h4>Termometer</h4>
+                        <div class="thermometer">
+                            <div class="mercury" id="mercury"></div>
+                        </div>
+                        <p class="temperature-display">Suhu: <span id="temperature">25°C</span></p>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" id="dissolve-btn" onclick="startDissolution()"><i class="fas fa-play"></i> Larutkan</button>
+                <button class="btn btn-danger" onclick="resetSimulation()"><i class="fas fa-redo"></i> Ulangi</button>
+                
+                <div id="observation-form" style="margin-top: 30px;">
+                    <h3>Catat Pengamatan:</h3>
+                    <p>Isi tabel berikut berdasarkan hasil pengamatan Anda:</p>
+                    
+                    <div class="observation-table">
+                        <table>
+                            <tr>
+                                <th>Zat</th>
+                                <th>Suhu Awal (°C)</th>
+                                <th>Suhu Akhir (°C)</th>
+                                <th>Perubahan Suhu</th>
+                                <th>Jenis Reaksi</th>
+                            </tr>
+                            <tr>
+                                <td class="chemical-cell">NaOH</td>
+                                <td class="suhu-awal">25</td>
+                                <td><input type="number" id="naoh-akhir" placeholder="Isi suhu akhir" min="0" max="100"></td>
+                                <td><input type="text" id="naoh-perubahan" placeholder="Naik/Turun"></td>
+                                <td>
+                                    <select id="naoh-jenis">
+                                        <option value="">Pilih</option>
+                                        <option value="Eksoterm">Eksoterm</option>
+                                        <option value="Endoterm">Endoterm</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="chemical-cell">CaCl₂</td>
+                                <td class="suhu-awal">25</td>
+                                <td><input type="number" id="cacl2-akhir" placeholder="Isi suhu akhir" min="0" max="100"></td>
+                                <td><input type="text" id="cacl2-perubahan" placeholder="Naik/Turun"></td>
+                                <td>
+                                    <select id="cacl2-jenis">
+                                        <option value="">Pilih</option>
+                                        <option value="Eksoterm">Eksoterm</option>
+                                        <option value="Endoterm">Endoterm</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="chemical-cell">NH₄NO₃</td>
+                                <td class="suhu-awal">25</td>
+                                <td><input type="number" id="nh4no3-akhir" placeholder="Isi suhu akhir" min="0" max="100"></td>
+                                <td><input type="text" id="nh4no3-perubahan" placeholder="Naik/Turun"></td>
+                                <td>
+                                    <select id="nh4no3-jenis">
+                                        <option value="">Pilih</option>
+                                        <option value="Eksoterm">Eksoterm</option>
+                                        <option value="Endoterm">Endoterm</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="chemical-cell">KCl</td>
+                                <td class="suhu-awal">25</td>
+                                <td><input type="number" id="kcl-akhir" placeholder="Isi suhu akhir" min="0" max="100"></td>
+                                <td><input type="text" id="kcl-perubahan" placeholder="Naik/Turun"></td>
+                                <td>
+                                    <select id="kcl-jenis">
+                                        <option value="">Pilih</option>
+                                        <option value="Eksoterm">Eksoterm</option>
+                                        <option value="Endoterm">Endoterm</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="btn btn-success" onclick="saveObservations()"><i class="fas fa-save"></i> Simpan Pengamatan</button>
+                        <button class="btn btn-primary" onclick="checkObservations()"><i class="fas fa-check"></i> Periksa Pengamatan</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-primary" onclick="prevScene()"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                <button class="btn btn-success" onclick="nextScene()">Analisis Data <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </section>
+        
+        <!-- Scene 6: Pengolahan dan Analisis Data -->
+        <section id="scene-analisis" class="scene-container hidden">
+            <h2 class="scene-title"><i class="fas fa-chart-bar"></i> Pengolahan dan Analisis Data</h2>
+            
+            <div class="problem-box">
+                <h3>HASIL PENGAMATAN:</h3>
+                <p>Berdasarkan simulasi yang telah dilakukan, analisilah data berikut:</p>
+            </div>
+            
+            <table class="data-table">
+                <tr>
+                    <th>Zat</th>
+                    <th>Perubahan Suhu</th>
+                    <th>Jenis Reaksi</th>
+                    <th>Aliran Energi</th>
+                    <th>Nilai ΔH</th>
+                </tr>
+                <tr>
+                    <td>NaOH</td>
+                    <td>Naik</td>
+                    <td>Eksoterm</td>
+                    <td>Sistem → Lingkungan</td>
+                    <td>Negatif</td>
+                </tr>
+                <tr>
+                    <td>CaCl₂</td>
+                    <td>Naik</td>
+                    <td>Eksoterm</td>
+                    <td>Sistem → Lingkungan</td>
+                    <td>Negatif</td>
+                </tr>
+                <tr>
+                    <td>NH₄NO₃</td>
+                    <td>Turun</td>
+                    <td>Endoterm</td>
+                    <td>Lingkungan → Sistem</td>
+                    <td>Positif</td>
+                </tr>
+                <tr>
+                    <td>KCl</td>
+                    <td>Turun</td>
+                    <td>Endoterm</td>
+                    <td>Lingkungan → Sistem</td>
+                    <td>Positif</td>
+                </tr>
+            </table>
+            
+            <div style="margin-top: 30px;">
+                <h4>Pertanyaan Analisis:</h4>
+                
+                <div class="essay-question">
+                    <label for="analisis-1">1. Mengapa suhu meningkat pada reaksi eksoterm?</label>
+                    <textarea id="analisis-1" placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                    <div class="saved-indicator" id="saved-1"><i class="fas fa-check-circle"></i> Jawaban tersimpan</div>
+                    <div class="error-message" id="error-1"><i class="fas fa-exclamation-circle"></i> Jawaban harus diisi</div>
+                </div>
+                
+                <div class="essay-question">
+                    <label for="analisis-2">2. Bagaimana aliran energi pada reaksi endoterm?</label>
+                    <textarea id="analisis-2" placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                    <div class="saved-indicator" id="saved-2"><i class="fas fa-check-circle"></i> Jawaban tersimpan</div>
+                    <div class="error-message" id="error-2"><i class="fas fa-exclamation-circle"></i> Jawaban harus diisi</div>
+                </div>
+                
+                <div class="essay-question">
+                    <label for="analisis-3">3. Apa hubungan antara perubahan suhu dengan nilai ΔH?</label>
+                    <textarea id="analisis-3" placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                    <div class="saved-indicator" id="saved-3"><i class="fas fa-check-circle"></i> Jawaban tersimpan</div>
+                    <div class="error-message" id="error-3"><i class="fas fa-exclamation-circle"></i> Jawaban harus diisi</div>
+                </div>
+                
+                <div class="essay-question">
+                    <label for="analisis-4">4. Mengapa reaksi eksoterm memiliki ΔH negatif sedangkan endoterm positif?</label>
+                    <textarea id="analisis-4" placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                    <div class="saved-indicator" id="saved-4"><i class="fas fa-check-circle"></i> Jawaban tersimpan</div>
+                    <div class="error-message" id="error-4"><i class="fas fa-exclamation-circle"></i> Jawaban harus diisi</div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-success" onclick="saveAnalysisAnswers()"><i class="fas fa-save"></i> Simpan Semua Jawaban</button>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h4>Kesimpulan Sementara:</h4>
+                <p>Berdasarkan data yang telah dikumpulkan, dapat disimpulkan bahwa:</p>
+                <ul>
+                    <li>Reaksi eksoterm ditandai dengan <strong>kenaikan suhu</strong>, aliran energi dari <strong>sistem ke lingkungan</strong>, dan nilai ΔH <strong>negatif</strong>.</li>
+                    <li>Reaksi endoterm ditandai dengan <strong>penurunan suhu</strong>, aliran energi dari <strong>lingkungan ke sistem</strong>, dan nilai ΔH <strong>positif</strong>.</li>
+                </ul>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-primary" onclick="prevScene()"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                <button class="btn btn-success" onclick="nextScene()">Kesimpulan <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </section>
+        
+        <!-- Scene 7: Penarikan Kesimpulan -->
+        <section id="scene-kesimpulan" class="scene-container hidden">
+            <h2 class="scene-title"><i class="fas fa-clipboard-check"></i> Penarikan Kesimpulan</h2>
+            
+            <div class="conclusion-area">
+                <h3>KESIMPULAN KELOMPOK:</h3>
+                
+                <div class="conclusion-form">
+                    <div class="conclusion-card">
+                        <h4>Ciri-ciri Reaksi EKSOTERM</h4>
+                        
+                        <div class="form-group">
+                            <label>Perubahan suhu:</label>
+                            <input type="text" class="form-control" id="exo-suhu-kesimpulan" placeholder="Contoh: Naik">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Aliran energi:</label>
+                            <input type="text" class="form-control" id="exo-energi-kesimpulan" placeholder="Contoh: dari Sistem ke Lingkungan">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Nilai ΔH:</label>
+                            <input type="text" class="form-control" id="exo-deltaH-kesimpulan" placeholder="Contoh: Negatif">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Contoh:</label>
+                            <input type="text" class="form-control" id="exo-contoh-kesimpulan" placeholder="Contoh: Pembakaran kayu">
+                        </div>
+                    </div>
+                    
+                    <div class="conclusion-card">
+                        <h4>Ciri-ciri Reaksi ENDOTERM</h4>
+                        
+                        <div class="form-group">
+                            <label>Perubahan suhu:</label>
+                            <input type="text" class="form-control" id="endo-suhu-kesimpulan" placeholder="Contoh: Turun">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Aliran energi:</label>
+                            <input type="text" class="form-control" id="endo-energi-kesimpulan" placeholder="Contoh: dari Lingkungan ke Sistem">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Nilai ΔH:</label>
+                            <input type="text" class="form-control" id="endo-deltaH-kesimpulan" placeholder="Contoh: Positif">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Contoh:</label>
+                            <input type="text" class="form-control" id="endo-contoh-kesimpulan" placeholder="Contoh: Es mencair">
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-success" onclick="saveConclusion()"><i class="fas fa-save"></i> Simpan Kesimpulan</button>
+                </div>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-primary" onclick="prevScene()"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                <button class="btn btn-success" onclick="nextScene()">Kuis <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </section>
+        
+        <!-- Scene 8: Kuis -->
+        <section id="scene-kuis" class="scene-container hidden">
+            <h2 class="scene-title"><i class="fas fa-trophy"></i> Kuis Reaksi Eksoterm dan Endoterm</h2>
+            
+            <div class="quiz-container">
+                <div class="quiz-progress">
+                    <div class="quiz-progress-bar" id="quiz-progress"></div>
+                </div>
+                
+                <div id="quiz-content">
+                    <!-- Konten kuis akan dimuat di sini oleh JavaScript -->
+                </div>
+                
+                <div class="quiz-navigation">
+                    <button class="btn btn-primary" id="prev-btn" onclick="prevQuestion()"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">Selanjutnya <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="btn btn-primary" onclick="prevScene()"><i class="fas fa-arrow-left"></i> Sebelumnya</button>
+                <button class="btn btn-success" onclick="completeLearning()">Selesai <i class="fas fa-check"></i></button>
+            </div>
+        </section>
+        
+        <!-- Scene 9: Menu Utama (Setelah menyelesaikan semua scene) -->
+        <section id="scene-menu" class="scene-container hidden">
+            <h2 class="scene-title"><i class="fas fa-bars"></i> Menu Pembelajaran</h2>
+            <p>Pilih bagian yang ingin Anda pelajari:</p>
+            
+            <div class="menu-grid">
+                <div class="menu-card" onclick="showScene('scene-orientasi')">
+                    <i class="fas fa-compass"></i>
+                    <h3>Orientasi</h3>
+                </div>
+                <div class="menu-card" onclick="showScene('scene-materi')">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Materi Pembelajaran</h3>
+                </div>
+                <div class="menu-card" onclick="showScene('scene-masalah')">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>Perumusan Masalah</h3>
+                </div>
+                <div class="menu-card" onclick="showScene('scene-hipotesis')">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Penyusunan Hipotesis</h3>
+                </div>
+                <div class="menu-card" onclick="showScene('scene-investigasi')">
+                    <i class="fas fa-flask"></i>
+                    <h3>Pengumpulan Data</h3>
+                </div>
+                <div class="menu-card" onclick="showScene('scene-analisis')">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Analisis Data</h3>
+                </div>
+                <div class="menu-card" onclick="showScene('scene-kesimpulan')">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h3>Kesimpulan</h3>
+                </div>
+                <div class="menu-card" onclick="showScene('scene-kuis')">
+                    <i class="fas fa-trophy"></i>
+                    <h3>Kuis</h3>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Data untuk kuis dengan penjelasan
+        const quizData = [
+            {
+                question: "Manakah yang merupakan ciri reaksi eksoterm?",
+                options: [
+                    "ΔH positif",
+                    "Suhu turun",
+                    "Kalor diserap",
+                    "ΔH negatif"
+                ],
+                correct: 3,
+                explanation: "Reaksi eksoterm ditandai dengan ΔH negatif karena melepaskan energi ke lingkungan."
+            },
+            {
+                question: "Reaksi yang menyerap kalor dari lingkungan disebut...",
+                options: [
+                    "Eksoterm",
+                    "Endoterm",
+                    "Netral",
+                    "Auto"
+                ],
+                correct: 1,
+                explanation: "Reaksi endoterm menyerap kalor dari lingkungan, menyebabkan suhu lingkungan turun."
+            },
+            {
+                question: "Ketika NaOH dilarutkan dalam air, suhu naik. Reaksi ini termasuk...",
+                options: [
+                    "Eksoterm",
+                    "Endoterm",
+                    "Netral",
+                    "Tidak ada perubahan"
+                ],
+                correct: 0,
+                explanation: "Pelarutan NaOH dalam air menyebabkan kenaikan suhu, yang merupakan ciri reaksi eksoterm."
+            },
+            {
+                question: "Manakah pernyataan yang benar untuk reaksi endoterm?",
+                options: [
+                    "Kalor dilepaskan",
+                    "ΔH positif",
+                    "Suhu lingkungan naik",
+                    "Energi berpindah ke lingkungan"
+                ],
+                correct: 1,
+                explanation: "Reaksi endoterm memiliki ΔH positif karena menyerap energi dari lingkungan."
+            },
+            {
+                question: "Contoh reaksi endoterm dalam kehidupan sehari-hari adalah...",
+                options: [
+                    "Pembakaran kayu",
+                    "Es mencair",
+                    "Besi berkarat",
+                    "Kapur tohor + air"
+                ],
+                correct: 1,
+                explanation: "Es mencair menyerap kalor dari lingkungan, sehingga termasuk reaksi endoterm."
+            },
+            {
+                question: "Pada reaksi eksoterm, aliran energi terjadi dari...",
+                options: [
+                    "Lingkungan ke sistem",
+                    "Sistem ke lingkungan",
+                    "Tidak ada aliran energi",
+                    "Sistem ke sistem"
+                ],
+                correct: 1,
+                explanation: "Pada reaksi eksoterm, energi mengalir dari sistem ke lingkungan."
+            },
+            {
+                question: "Manakah dari berikut ini yang BUKAN contoh reaksi eksoterm?",
+                options: [
+                    "Respirasi sel",
+                    "Pembakaran bensin",
+                    "Fotosintesis",
+                    "Netralisasi asam-basa"
+                ],
+                correct: 2,
+                explanation: "Fotosintesis adalah reaksi endoterm karena menyerap energi dari cahaya matahari."
+            },
+            {
+                question: "Jika suatu reaksi memiliki ΔH = -50 kJ, reaksi tersebut adalah...",
+                options: [
+                    "Eksoterm",
+                    "Endoterm",
+                    "Tidak dapat ditentukan",
+                    "Reaksi netral"
+                ],
+                correct: 0,
+                explanation: "Nilai ΔH negatif menunjukkan reaksi eksoterm (melepaskan energi)."
+            }
+        ];
+        
+        // Data yang benar untuk pengamatan
+        const correctObservations = {
+            'NaOH': { akhir: 45, perubahan: 'Naik', jenis: 'Eksoterm' },
+            'CaCl2': { akhir: 45, perubahan: 'Naik', jenis: 'Eksoterm' },
+            'NH4NO3': { akhir: 10, perubahan: 'Turun', jenis: 'Endoterm' },
+            'KCl': { akhir: 10, perubahan: 'Turun', jenis: 'Endoterm' }
+        };
+        
+        let currentQuestion = 0;
+        let userAnswers = Array(quizData.length).fill(null);
+        let selectedChemical = null;
+        let currentSceneIndex = 0;
+        
+        // Urutan scene untuk pembelajaran step-by-step
+        const sceneOrder = [
+            'scene-orientasi',
+            'scene-materi',
+            'scene-masalah',
+            'scene-hipotesis',
+            'scene-investigasi',
+            'scene-analisis',
+            'scene-kesimpulan',
+            'scene-kuis'
+        ];
+        
+        // Fungsi untuk membuat partikel mengambang
+        function createFloatingParticles() {
+            const container = document.getElementById('floating-particles');
+            const colors = ['#4361ee', '#4cc9f0', '#f72585', '#7209b7'];
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'floating-particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.animationDelay = `${Math.random() * 15}s`;
+                particle.style.width = `${4 + Math.random() * 6}px`;
+                particle.style.height = particle.style.width;
+                container.appendChild(particle);
+            }
+        }
+        
+        // Fungsi untuk membuat diagram energi
+        function createEnergyDiagrams() {
+            createEnergyDiagram('diagram-exo', 'exo', 150, 80);
+            createEnergyDiagram('diagram-endo', 'endo', 80, 150);
+        }
+        
+        function createEnergyDiagram(containerId, type, reactantY, productY) {
+            const container = document.getElementById(containerId);
+            const height = 300;
+            const width = container.offsetWidth;
+            
+            // Bersihkan kontainer
+            container.innerHTML = '';
+            
+            // Buat sumbu
+            const axis = document.createElement('div');
+            axis.className = 'diagram-axis';
+            container.appendChild(axis);
+            
+            const yAxis = document.createElement('div');
+            yAxis.className = 'diagram-y-axis';
+            container.appendChild(yAxis);
+            
+            // Buat label sumbu
+            const xLabel = document.createElement('div');
+            xLabel.className = 'diagram-label';
+            xLabel.textContent = 'Laju Reaksi';
+            xLabel.style.bottom = '30px';
+            xLabel.style.left = '50%';
+            xLabel.style.transform = 'translateX(-50%)';
+            container.appendChild(xLabel);
+            
+            const yLabel = document.createElement('div');
+            yLabel.className = 'diagram-label';
+            yLabel.textContent = 'Energi';
+            yLabel.style.top = '20px';
+            yLabel.style.left = '30px';
+            yLabel.style.transform = 'rotate(-90deg)';
+            container.appendChild(yLabel);
+            
+            // Buat tingkat energi
+            for (let i = 0; i <= 4; i++) {
+                const level = document.createElement('div');
+                level.className = 'energy-level';
+                level.style.bottom = `${50 + i * 50}px`;
+                container.appendChild(level);
+                
+                const label = document.createElement('div');
+                label.className = 'diagram-label';
+                label.textContent = `${i * 50} kJ`;
+                label.style.bottom = `${50 + i * 50}px`;
+                label.style.left = '60px';
+                label.style.transform = 'translateY(50%)';
+                container.appendChild(label);
+            }
+            
+            // Buat jalur reaksi
+            const path = document.createElement('div');
+            path.className = `reaction-path ${type}`;
+            path.style.bottom = `${50 + reactantY}px`;
+            path.style.height = `${Math.abs(productY - reactantY)}px`;
+            container.appendChild(path);
+            
+            // Buat titik reaktan
+            const reactant = document.createElement('div');
+            reactant.className = 'reaction-point reactants';
+            reactant.style.left = '150px';
+            reactant.style.bottom = `${50 + reactantY}px`;
+            container.appendChild(reactant);
+            
+            const reactantLabel = document.createElement('div');
+            reactantLabel.className = 'diagram-label';
+            reactantLabel.textContent = 'Reaktan';
+            reactantLabel.style.left = '150px';
+            reactantLabel.style.bottom = `${30 + reactantY}px`;
+            reactantLabel.style.transform = 'translateX(-50%)';
+            container.appendChild(reactantLabel);
+            
+            // Buat titik produk
+            const product = document.createElement('div');
+            product.className = 'reaction-point products';
+            product.style.left = '150px';
+            product.style.bottom = `${50 + productY}px`;
+            container.appendChild(product);
+            
+            const productLabel = document.createElement('div');
+            productLabel.className = 'diagram-label';
+            productLabel.textContent = 'Produk';
+            productLabel.style.left = '150px';
+            productLabel.style.bottom = `${30 + productY}px`;
+            productLabel.style.transform = 'translateX(-50%)';
+            container.appendChild(productLabel);
+            
+            // Tambahkan label ΔH
+            const deltaH = document.createElement('div');
+            deltaH.className = 'diagram-label';
+            deltaH.textContent = type === 'exo' ? 'ΔH = -70 kJ' : 'ΔH = +70 kJ';
+            deltaH.style.left = '200px';
+            deltaH.style.bottom = `${50 + (reactantY + productY) / 2}px`;
+            deltaH.style.transform = 'translateY(50%)';
+            deltaH.style.fontWeight = 'bold';
+            deltaH.style.color = type === 'exo' ? 'var(--exo-color)' : 'var(--endo-color)';
+            container.appendChild(deltaH);
+        }
+        
+        // Fungsi untuk berpindah ke scene berikutnya
+        function nextScene() {
+            if (currentSceneIndex < sceneOrder.length - 1) {
+                currentSceneIndex++;
+                showCurrentScene();
+            }
+        }
+        
+        // Fungsi untuk kembali ke scene sebelumnya
+        function prevScene() {
+            if (currentSceneIndex > 0) {
+                currentSceneIndex--;
+                showCurrentScene();
+            }
+        }
+        
+        // Fungsi untuk menampilkan scene berdasarkan index
+        function showCurrentScene() {
+            // Sembunyikan semua scene
+            const scenes = document.querySelectorAll('.scene-container');
+            scenes.forEach(scene => {
+                scene.classList.add('hidden');
+            });
+            
+            // Tampilkan scene yang sesuai dengan index
+            const sceneId = sceneOrder[currentSceneIndex];
+            document.getElementById(sceneId).classList.remove('hidden');
+            
+            // Update progress bar
+            updateProgressBar();
+            
+            // Jika scene kuis, inisialisasi kuis
+            if (sceneId === 'scene-kuis') {
+                initQuiz();
+            }
+            
+            // Jika scene materi, buat diagram energi
+            if (sceneId === 'scene-materi') {
+                setTimeout(createEnergyDiagrams, 100);
+            }
+            
+            // Jika scene masalah atau analisis, muat jawaban yang tersimpan
+            if (sceneId === 'scene-masalah') {
+                loadSavedMasalahAnswers();
+            }
+            if (sceneId === 'scene-analisis') {
+                loadSavedAnalysisAnswers();
+            }
+            
+            // Scroll ke atas
+            window.scrollTo(0, 0);
+        }
+        
+        // Fungsi untuk menampilkan scene tertentu (untuk menu)
+        function showScene(sceneId) {
+            // Sembunyikan semua scene
+            const scenes = document.querySelectorAll('.scene-container');
+            scenes.forEach(scene => {
+                scene.classList.add('hidden');
+            });
+            
+            // Tampilkan scene yang dipilih
+            document.getElementById(sceneId).classList.remove('hidden');
+            
+            // Update currentSceneIndex berdasarkan sceneId
+            const index = sceneOrder.indexOf(sceneId);
+            if (index !== -1) {
+                currentSceneIndex = index;
+                updateProgressBar();
+            }
+            
+            // Jika scene kuis, inisialisasi kuis
+            if (sceneId === 'scene-kuis') {
+                initQuiz();
+            }
+            
+            // Jika scene materi, buat diagram energi
+            if (sceneId === 'scene-materi') {
+                setTimeout(createEnergyDiagrams, 100);
+            }
+            
+            // Jika scene masalah atau analisis, muat jawaban yang tersimpan
+            if (sceneId === 'scene-masalah') {
+                loadSavedMasalahAnswers();
+            }
+            if (sceneId === 'scene-analisis') {
+                loadSavedAnalysisAnswers();
+            }
+            
+            // Scroll ke atas
+            window.scrollTo(0, 0);
+        }
+        
+        // Fungsi untuk memperbarui progress bar
+        function updateProgressBar() {
+            // Update progress steps
+            for (let i = 1; i <= 8; i++) {
+                const step = document.getElementById(`step-${i}`);
+                if (i <= currentSceneIndex + 1) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                } else {
+                    step.classList.remove('completed', 'active');
+                }
+            }
+            
+            // Set step aktif
+            if (currentSceneIndex < 8) {
+                const activeStep = document.getElementById(`step-${currentSceneIndex + 1}`);
+                activeStep.classList.add('active');
+            }
+        }
+        
+        // Fungsi untuk menyelesaikan pembelajaran
+        function completeLearning() {
+            // Tampilkan pesan penyelesaian
+            document.getElementById('completion-message').classList.add('show');
+            
+            // Sembunyikan scene kuis
+            document.getElementById('scene-kuis').classList.add('hidden');
+            
+            // Tampilkan menu utama setelah beberapa detik
+            setTimeout(() => {
+                document.getElementById('completion-message').classList.remove('show');
+                showScene('scene-menu');
+            }, 5000);
+        }
+        
+        // Fungsi untuk memeriksa hipotesis
+        function checkHypothesis() {
+            const exoSuhu = document.getElementById('exo-suhu').value;
+            const exoEnergi = document.getElementById('exo-energi').value.toLowerCase();
+            const exoEntalpi = document.getElementById('exo-entapi').value;
+            const exoContoh = document.getElementById('exo-contoh').value;
+            
+            const endoSuhu = document.getElementById('endo-suhu').value;
+            const endoEnergi = document.getElementById('endo-energi').value.toLowerCase();
+            const endoEntalpi = document.getElementById('endo-entapi').value;
+            const endoContoh = document.getElementById('endo-contoh').value;
+            
+            let correct = true;
+            let message = "";
+            
+            // Periksa jawaban untuk eksoterm
+            if (exoSuhu !== "naik") {
+                correct = false;
+                message += "Reaksi eksoterm: perubahan suhu seharusnya Naik\n";
+            }
+            
+            if (!exoEnergi.includes("sistem") || !exoEnergi.includes("lingkungan") || exoEnergi === "") {
+                correct = false;
+                message += "Reaksi eksoterm: aliran energi seharusnya 'dari Sistem ke Lingkungan'\n";
+            }
+            
+            if (exoEntalpi !== "negatif") {
+                correct = false;
+                message += "Reaksi eksoterm: perubahan entalpi (ΔH) seharusnya Negatif\n";
+            }
+            
+            // Periksa jawaban untuk endoterm
+            if (endoSuhu !== "turun") {
+                correct = false;
+                message += "Reaksi endoterm: perubahan suhu seharusnya Turun\n";
+            }
+            
+            if (!endoEnergi.includes("lingkungan") || !endoEnergi.includes("sistem") || endoEnergi === "") {
+                correct = false;
+                message += "Reaksi endoterm: aliran energi seharusnya 'dari Lingkungan ke Sistem'\n";
+            }
+            
+            if (endoEntalpi !== "positif") {
+                correct = false;
+                message += "Reaksi endoterm: perubahan entalpi (ΔH) seharusnya Positif\n";
+            }
+            
+            if (correct) {
+                alert("Selamat! Hipotesis Anda benar. Anda dapat melanjutkan ke investigasi.");
+            } else {
+                alert("Beberapa jawaban belum tepat:\n\n" + message + "\n\nPerhatikan: Untuk aliran energi, gunakan format 'dari ... ke ...'");
+            }
+        }
+        
+        // Fungsi untuk membuat partikel dalam simulasi
+        function createParticles(container, count, color) {
+            container.innerHTML = '';
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.background = color;
+                particle.style.left = `${10 + Math.random() * 80}%`;
+                particle.style.bottom = '0%';
+                particle.style.animationDelay = `${Math.random() * 2}s`;
+                container.appendChild(particle);
+            }
+        }
+        
+        // Fungsi untuk animasi partikel
+        function animateParticles(container, type) {
+            const particles = container.querySelectorAll('.particle');
+            particles.forEach(particle => {
+                // Reset posisi
+                particle.style.bottom = '0%';
+                particle.style.opacity = '0';
+                
+                // Animasi
+                setTimeout(() => {
+                    particle.style.opacity = '0.7';
+                    particle.style.transition = 'all 1.5s ease';
+                    particle.style.bottom = `${70 + Math.random() * 20}%`;
+                    
+                    // Hilangkan partikel setelah animasi
+                    setTimeout(() => {
+                        particle.style.opacity = '0';
+                    }, 1400);
+                }, 100);
+            });
+        }
+        
+        // Fungsi untuk simulasi pelarutan
+        function startDissolution() {
+            if (!selectedChemical) {
+                alert("Pilih zat terlebih dahulu!");
+                return;
+            }
+            
+            const chemicalCard = document.querySelector('.chemical-card.selected');
+            const reactionType = chemicalCard.getAttribute('data-type');
+            const chemicalName = chemicalCard.getAttribute('data-chemical');
+            
+            const liquid = document.getElementById('liquid');
+            const mercury = document.getElementById('mercury');
+            const temperatureDisplay = document.getElementById('temperature');
+            const particlesContainer = document.getElementById('particles');
+            
+            // Reset dan mulai animasi
+            liquid.style.height = '0%';
+            mercury.style.height = '50%';
+            temperatureDisplay.textContent = '25°C';
+            
+            // Buat partikel berdasarkan jenis reaksi
+            const particleColor = reactionType === 'exo' ? '#ffeb3b' : '#4fc3f7';
+            createParticles(particlesContainer, 15, particleColor);
+            
+            // Animasi berdasarkan jenis reaksi
+            setTimeout(() => {
+                liquid.classList.add(reactionType);
+                liquid.style.height = '70%';
+                
+                // Animasi partikel
+                animateParticles(particlesContainer, reactionType);
+                
+                if (reactionType === 'exo') {
+                    // Eksoterm: suhu naik
+                    mercury.style.height = '80%';
+                    temperatureDisplay.textContent = '45°C';
+                } else {
+                    // Endoterm: suhu turun
+                    mercury.style.height = '20%';
+                    temperatureDisplay.textContent = '10°C';
+                }
+            }, 500);
+        }
+        
+        // Fungsi untuk reset simulasi
+        function resetSimulation() {
+            const liquid = document.getElementById('liquid');
+            const mercury = document.getElementById('mercury');
+            const temperatureDisplay = document.getElementById('temperature');
+            const particlesContainer = document.getElementById('particles');
+            
+            liquid.style.height = '0%';
+            liquid.classList.remove('exo', 'endo');
+            mercury.style.height = '50%';
+            temperatureDisplay.textContent = '25°C';
+            particlesContainer.innerHTML = '';
+            
+            // Hapus seleksi chemical
+            const selected = document.querySelector('.chemical-card.selected');
+            if (selected) {
+                selected.classList.remove('selected');
+                selectedChemical = null;
+            }
+        }
+        
+        // Fungsi untuk menyimpan pengamatan siswa
+        function saveObservations() {
+            const observations = {
+                naoh: {
+                    akhir: document.getElementById('naoh-akhir').value,
+                    perubahan: document.getElementById('naoh-perubahan').value,
+                    jenis: document.getElementById('naoh-jenis').value
+                },
+                cacl2: {
+                    akhir: document.getElementById('cacl2-akhir').value,
+                    perubahan: document.getElementById('cacl2-perubahan').value,
+                    jenis: document.getElementById('cacl2-jenis').value
+                },
+                nh4no3: {
+                    akhir: document.getElementById('nh4no3-akhir').value,
+                    perubahan: document.getElementById('nh4no3-perubahan').value,
+                    jenis: document.getElementById('nh4no3-jenis').value
+                },
+                kcl: {
+                    akhir: document.getElementById('kcl-akhir').value,
+                    perubahan: document.getElementById('kcl-perubahan').value,
+                    jenis: document.getElementById('kcl-jenis').value
+                }
+            };
+            
+            // Simpan ke localStorage
+            localStorage.setItem('observations', JSON.stringify(observations));
+            alert("Pengamatan berhasil disimpan!");
+        }
+        
+        // Fungsi untuk memuat pengamatan yang tersimpan
+        function loadSavedObservations() {
+            const savedObservations = localStorage.getItem('observations');
+            if (savedObservations) {
+                const observations = JSON.parse(savedObservations);
+                
+                // NaOH
+                document.getElementById('naoh-akhir').value = observations.naoh.akhir || '';
+                document.getElementById('naoh-perubahan').value = observations.naoh.perubahan || '';
+                document.getElementById('naoh-jenis').value = observations.naoh.jenis || '';
+                
+                // CaCl2
+                document.getElementById('cacl2-akhir').value = observations.cacl2.akhir || '';
+                document.getElementById('cacl2-perubahan').value = observations.cacl2.perubahan || '';
+                document.getElementById('cacl2-jenis').value = observations.cacl2.jenis || '';
+                
+                // NH4NO3
+                document.getElementById('nh4no3-akhir').value = observations.nh4no3.akhir || '';
+                document.getElementById('nh4no3-perubahan').value = observations.nh4no3.perubahan || '';
+                document.getElementById('nh4no3-jenis').value = observations.nh4no3.jenis || '';
+                
+                // KCl
+                document.getElementById('kcl-akhir').value = observations.kcl.akhir || '';
+                document.getElementById('kcl-perubahan').value = observations.kcl.perubahan || '';
+                document.getElementById('kcl-jenis').value = observations.kcl.jenis || '';
+            }
+        }
+        
+        // Fungsi untuk memeriksa pengamatan siswa
+        function checkObservations() {
+            let correctCount = 0;
+            let totalCount = 0;
+            let feedback = "";
+            
+            // Periksa setiap zat
+            const chemicals = ['naoh', 'cacl2', 'nh4no3', 'kcl'];
+            chemicals.forEach(chem => {
+                const akhir = document.getElementById(`${chem}-akhir`).value;
+                const perubahan = document.getElementById(`${chem}-perubahan`).value;
+                const jenis = document.getElementById(`${chem}-jenis`).value;
+                
+                const correct = correctObservations[chem.toUpperCase()];
+                
+                if (akhir && perubahan && jenis) {
+                    totalCount++;
+                    
+                    let isCorrect = true;
+                    let chemFeedback = "";
+                    
+                    // Periksa suhu akhir (memberi toleransi ±5°C)
+                    if (Math.abs(parseInt(akhir) - correct.akhir) <= 5) {
+                        chemFeedback += "Suhu akhir benar. ";
+                    } else {
+                        chemFeedback += `Suhu akhir seharusnya sekitar ${correct.akhir}°C. `;
+                        isCorrect = false;
+                    }
+                    
+                    // Periksa perubahan suhu
+                    if (perubahan.toLowerCase() === correct.perubahan.toLowerCase()) {
+                        chemFeedback += "Perubahan suhu benar. ";
+                    } else {
+                        chemFeedback += `Perubahan suhu seharusnya "${correct.perubahan}". `;
+                        isCorrect = false;
+                    }
+                    
+                    // Periksa jenis reaksi
+                    if (jenis === correct.jenis) {
+                        chemFeedback += "Jenis reaksi benar.";
+                    } else {
+                        chemFeedback += `Jenis reaksi seharusnya "${correct.jenis}".`;
+                        isCorrect = false;
+                    }
+                    
+                    if (isCorrect) {
+                        correctCount++;
+                        feedback += `${chem.toUpperCase()}: Semua benar! 👍\n`;
+                    } else {
+                        feedback += `${chem.toUpperCase()}: ${chemFeedback}\n`;
+                    }
+                }
+            });
+            
+            if (totalCount === 0) {
+                alert("Silakan isi pengamatan untuk setidaknya satu zat terlebih dahulu.");
+                return;
+            }
+            
+            const accuracy = (correctCount / totalCount) * 100;
+            let finalMessage = `Akurasi pengamatan Anda: ${accuracy.toFixed(0)}%\n\n${feedback}`;
+            
+            if (accuracy === 100) {
+                finalMessage = "Selamat! Semua pengamatan Anda benar! 🎉\n\n" + feedback;
+            } else if (accuracy >= 70) {
+                finalMessage = "Bagus! Sebagian besar pengamatan Anda benar. Perhatikan beberapa koreksi berikut:\n\n" + feedback;
+            } else {
+                finalMessage = "Perhatikan kembali pengamatan Anda. Berikut adalah koreksi:\n\n" + feedback;
+            }
+            
+            alert(finalMessage);
+        }
+        
+        // Fungsi untuk menyimpan jawaban masalah
+        function saveMasalahAnswers() {
+            const answers = {
+                masalah1: document.getElementById('masalah-1').value.trim(),
+                masalah2: document.getElementById('masalah-2').value.trim(),
+                masalah3: document.getElementById('masalah-3').value.trim(),
+                masalah4: document.getElementById('masalah-4').value.trim()
+            };
+            
+            // Validasi: pastikan semua jawaban diisi
+            let allFilled = true;
+            for (let i = 1; i <= 4; i++) {
+                const answer = answers[`masalah${i}`];
+                const errorElement = document.getElementById(`error-masalah-${i}`);
+                
+                if (!answer) {
+                    allFilled = false;
+                    errorElement.classList.add('show');
+                } else {
+                    errorElement.classList.remove('show');
+                }
+            }
+            
+            if (!allFilled) {
+                alert("Harap isi semua pertanyaan sebelum menyimpan!");
+                return;
+            }
+            
+            // Simpan ke localStorage
+            localStorage.setItem('masalahAnswers', JSON.stringify(answers));
+            
+            // Tampilkan indikator tersimpan untuk setiap pertanyaan
+            for (let i = 1; i <= 4; i++) {
+                const indicator = document.getElementById(`saved-masalah-${i}`);
+                indicator.classList.add('show');
+                
+                // Sembunyikan indikator setelah 3 detik
+                setTimeout(() => {
+                    indicator.classList.remove('show');
+                }, 3000);
+            }
+            
+            alert("Jawaban perumusan masalah berhasil disimpan!");
+        }
+        
+        // Fungsi untuk memuat jawaban masalah yang tersimpan
+        function loadSavedMasalahAnswers() {
+            const savedAnswers = localStorage.getItem('masalahAnswers');
+            if (savedAnswers) {
+                const answers = JSON.parse(savedAnswers);
+                document.getElementById('masalah-1').value = answers.masalah1 || '';
+                document.getElementById('masalah-2').value = answers.masalah2 || '';
+                document.getElementById('masalah-3').value = answers.masalah3 || '';
+                document.getElementById('masalah-4').value = answers.masalah4 || '';
+            }
+        }
+        
+        // Fungsi untuk menyimpan jawaban analisis
+        function saveAnalysisAnswers() {
+            const answers = {
+                analisis1: document.getElementById('analisis-1').value.trim(),
+                analisis2: document.getElementById('analisis-2').value.trim(),
+                analisis3: document.getElementById('analisis-3').value.trim(),
+                analisis4: document.getElementById('analisis-4').value.trim()
+            };
+            
+            // Validasi: pastikan semua jawaban diisi
+            let allFilled = true;
+            for (let i = 1; i <= 4; i++) {
+                const answer = answers[`analisis${i}`];
+                const errorElement = document.getElementById(`error-${i}`);
+                
+                if (!answer) {
+                    allFilled = false;
+                    errorElement.classList.add('show');
+                } else {
+                    errorElement.classList.remove('show');
+                }
+            }
+            
+            if (!allFilled) {
+                alert("Harap isi semua pertanyaan sebelum menyimpan!");
+                return;
+            }
+            
+            // Simpan ke localStorage
+            localStorage.setItem('analysisAnswers', JSON.stringify(answers));
+            
+            // Tampilkan indikator tersimpan untuk setiap pertanyaan
+            for (let i = 1; i <= 4; i++) {
+                const indicator = document.getElementById(`saved-${i}`);
+                indicator.classList.add('show');
+                
+                // Sembunyikan indikator setelah 3 detik
+                setTimeout(() => {
+                    indicator.classList.remove('show');
+                }, 3000);
+            }
+            
+            alert("Jawaban analisis berhasil disimpan!");
+        }
+        
+        // Fungsi untuk memuat jawaban analisis yang tersimpan
+        function loadSavedAnalysisAnswers() {
+            const savedAnswers = localStorage.getItem('analysisAnswers');
+            if (savedAnswers) {
+                const answers = JSON.parse(savedAnswers);
+                document.getElementById('analisis-1').value = answers.analisis1 || '';
+                document.getElementById('analisis-2').value = answers.analisis2 || '';
+                document.getElementById('analisis-3').value = answers.analisis3 || '';
+                document.getElementById('analisis-4').value = answers.analisis4 || '';
+            }
+        }
+        
+        // Fungsi untuk menyimpan kesimpulan
+        function saveConclusion() {
+            const exoSuhu = document.getElementById('exo-suhu-kesimpulan').value;
+            const exoEnergi = document.getElementById('exo-energi-kesimpulan').value;
+            const exoDeltaH = document.getElementById('exo-deltaH-kesimpulan').value;
+            const exoContoh = document.getElementById('exo-contoh-kesimpulan').value;
+            
+            const endoSuhu = document.getElementById('endo-suhu-kesimpulan').value;
+            const endoEnergi = document.getElementById('endo-energi-kesimpulan').value;
+            const endoDeltaH = document.getElementById('endo-deltaH-kesimpulan').value;
+            const endoContoh = document.getElementById('endo-contoh-kesimpulan').value;
+            
+            if (!exoSuhu || !exoEnergi || !exoDeltaH || !exoContoh || 
+                !endoSuhu || !endoEnergi || !endoDeltaH || !endoContoh) {
+                alert("Harap isi semua field sebelum menyimpan!");
+                return;
+            }
+            
+            // Simpan ke localStorage
+            const conclusion = {
+                exoSuhu, exoEnergi, exoDeltaH, exoContoh,
+                endoSuhu, endoEnergi, endoDeltaH, endoContoh
+            };
+            
+            localStorage.setItem('conclusion', JSON.stringify(conclusion));
+            
+            alert("Kesimpulan berhasil disimpan!\n\nAnda dapat melanjutkan ke kuis untuk menguji pemahaman.");
+        }
+        
+        // Fungsi untuk inisialisasi kuis
+        function initQuiz() {
+            currentQuestion = 0;
+            userAnswers = Array(quizData.length).fill(null);
+            loadQuestion();
+            updateQuizProgress();
+        }
+        
+        // Fungsi untuk memuat pertanyaan
+        function loadQuestion() {
+            const quizContent = document.getElementById('quiz-content');
+            const question = quizData[currentQuestion];
+            
+            let optionsHTML = '';
+            question.options.forEach((option, index) => {
+                const isSelected = userAnswers[currentQuestion] === index;
+                optionsHTML += `
+                    <div class="option ${isSelected ? 'selected' : ''}" onclick="selectOption(${index})">
+                        <div class="option-number">${String.fromCharCode(65 + index)}</div>
+                        <div>${option}</div>
+                    </div>
+                `;
+            });
+            
+            quizContent.innerHTML = `
+                <div class="question-card">
+                    <div class="question-text">${currentQuestion + 1}. ${question.question}</div>
+                    <div class="options-container">
+                        ${optionsHTML}
+                    </div>
+                </div>
+            `;
+            
+            // Perbarui status tombol navigasi
+            document.getElementById('prev-btn').disabled = currentQuestion === 0;
+            document.getElementById('next-btn').textContent = 
+                currentQuestion === quizData.length - 1 ? 'Selesai' : 'Selanjutnya';
+        }
+        
+        // Fungsi untuk memilih opsi jawaban
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestion] = optionIndex;
+            loadQuestion();
+        }
+        
+        // Fungsi untuk pertanyaan sebelumnya
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+                updateQuizProgress();
+            }
+        }
+        
+        // Fungsi untuk pertanyaan berikutnya
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+                updateQuizProgress();
+            } else {
+                showQuizResults();
+            }
+        }
+        
+        // Fungsi untuk memperbarui progress bar kuis
+        function updateQuizProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('quiz-progress').style.width = `${progress}%`;
+        }
+        
+        // Fungsi untuk menampilkan hasil kuis dengan review
+        function showQuizResults() {
+            let score = 0;
+            let incorrectQuestions = [];
+            
+            // Hitung skor dan identifikasi soal yang salah
+            userAnswers.forEach((answer, index) => {
+                if (answer === quizData[index].correct) {
+                    score++;
+                } else {
+                    incorrectQuestions.push({
+                        questionIndex: index,
+                        userAnswer: answer,
+                        correctAnswer: quizData[index].correct,
+                        explanation: quizData[index].explanation
+                    });
+                }
+            });
+            
+            const percentage = (score / quizData.length) * 100;
+            
+            let message = "";
+            if (percentage >= 80) {
+                message = "Excellent! Pemahaman Anda tentang reaksi eksoterm dan endoterm sangat baik!";
+            } else if (percentage >= 60) {
+                message = "Bagus! Anda sudah memahami sebagian besar konsep, tetapi masih perlu belajar lebih lanjut.";
+            } else {
+                message = "Jangan menyerah! Pelajari kembali materi dan coba lagi.";
+            }
+            
+            const quizContent = document.getElementById('quiz-content');
+            
+            // Buat HTML untuk review kuis
+            let reviewHTML = '';
+            
+            if (incorrectQuestions.length > 0) {
+                reviewHTML += `
+                    <div class="quiz-review">
+                        <h3 class="review-title"><i class="fas fa-search"></i> Review Jawaban</h3>
+                        <p>Berikut adalah soal-soal yang perlu Anda perbaiki:</p>
+                        
+                        <div class="review-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">${score}/${quizData.length}</div>
+                                <div class="stat-label">Jawaban Benar</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${percentage.toFixed(0)}%</div>
+                                <div class="stat-label">Nilai</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${incorrectQuestions.length}</div>
+                                <div class="stat-label">Perlu Perbaikan</div>
+                            </div>
+                        </div>
+                `;
+                
+                incorrectQuestions.forEach(item => {
+                    const question = quizData[item.questionIndex];
+                    const userAnswerText = item.userAnswer !== null ? question.options[item.userAnswer] : "Tidak dijawab";
+                    const correctAnswerText = question.options[item.correctAnswer];
+                    
+                    reviewHTML += `
+                        <div class="review-item incorrect">
+                            <div class="review-question">
+                                <strong>Soal ${item.questionIndex + 1}:</strong> ${question.question}
+                            </div>
+                            <div class="review-answer user">
+                                <span class="answer-icon incorrect"><i class="fas fa-times-circle"></i></span>
+                                <strong>Jawaban Anda:</strong> ${userAnswerText}
+                            </div>
+                            <div class="review-answer correct">
+                                <span class="answer-icon correct"><i class="fas fa-check-circle"></i></span>
+                                <strong>Jawaban yang benar:</strong> ${correctAnswerText}
+                            </div>
+                            <div class="review-explanation">
+                                <strong>Penjelasan:</strong> ${item.explanation}
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                reviewHTML += `</div>`;
+            } else {
+                reviewHTML = `
+                    <div class="quiz-review">
+                        <h3 class="review-title"><i class="fas fa-check-circle"></i> Selamat!</h3>
+                        <p>Anda menjawab semua soal dengan benar. Pemahaman Anda tentang reaksi eksoterm dan endoterm sudah sangat baik!</p>
+                        
+                        <div class="review-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">${score}/${quizData.length}</div>
+                                <div class="stat-label">Jawaban Benar</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${percentage.toFixed(0)}%</div>
+                                <div class="stat-label">Nilai</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">0</div>
+                                <div class="stat-label">Perlu Perbaikan</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            quizContent.innerHTML = `
+                <div class="result-container">
+                    <h3 class="quiz-title">Hasil Kuis</h3>
+                    <div class="result-score">${percentage}%</div>
+                    <div class="result-message">
+                        ${message}
+                    </div>
+                    <p>Anda menjawab ${score} dari ${quizData.length} soal dengan benar</p>
+                    
+                    ${reviewHTML}
+                    
+                    <div style="margin-top: 30px;">
+                        <button class="btn btn-primary" onclick="initQuiz()"><i class="fas fa-redo"></i> Ulangi Kuis</button>
+                    </div>
+                </div>
+            `;
+            
+            // Sembunyikan tombol navigasi
+            document.querySelector('.quiz-navigation').classList.add('hidden');
+        }
+        
+        // Inisialisasi event listeners setelah DOM dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            // Buat partikel mengambang
+            createFloatingParticles();
+            
+            // Event listener untuk memilih chemical
+            const chemicalCards = document.querySelectorAll('.chemical-card');
+            chemicalCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Hapus seleksi sebelumnya
+                    chemicalCards.forEach(c => c.classList.remove('selected'));
+                    
+                    // Tambahkan seleksi ke card yang diklik
+                    this.classList.add('selected');
+                    selectedChemical = this.getAttribute('data-chemical');
+                });
+            });
+            
+            // Load saved data
+            loadSavedObservations();
+            
+            const savedConclusion = localStorage.getItem('conclusion');
+            if (savedConclusion) {
+                const conclusion = JSON.parse(savedConclusion);
+                document.getElementById('exo-suhu-kesimpulan').value = conclusion.exoSuhu || '';
+                document.getElementById('exo-energi-kesimpulan').value = conclusion.exoEnergi || '';
+                document.getElementById('exo-deltaH-kesimpulan').value = conclusion.exoDeltaH || '';
+                document.getElementById('exo-contoh-kesimpulan').value = conclusion.exoContoh || '';
+                document.getElementById('endo-suhu-kesimpulan').value = conclusion.endoSuhu || '';
+                document.getElementById('endo-energi-kesimpulan').value = conclusion.endoEnergi || '';
+                document.getElementById('endo-deltaH-kesimpulan').value = conclusion.endoDeltaH || '';
+                document.getElementById('endo-contoh-kesimpulan').value = conclusion.endoContoh || '';
+            }
+            
+            // Auto-save essay answers
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach(textarea => {
+                textarea.addEventListener('input', function() {
+                    // Menyimpan jawaban secara otomatis saat pengguna mengetik
+                    const id = this.id;
+                    const value = this.value.trim();
+                    
+                    if (id.startsWith('masalah-')) {
+                        const answers = JSON.parse(localStorage.getItem('masalahAnswers') || '{}');
+                        answers[id.replace('masalah-', 'masalah')] = value;
+                        localStorage.setItem('masalahAnswers', JSON.stringify(answers));
+                    } else if (id.startsWith('analisis-')) {
+                        const answers = JSON.parse(localStorage.getItem('analysisAnswers') || '{}');
+                        answers[id.replace('analisis-', 'analisis')] = value;
+                        localStorage.setItem('analysisAnswers', JSON.stringify(answers));
+                    }
+                });
+            });
+            
+            // Tampilkan scene pertama (orientasi)
+            showCurrentScene();
+        });
+    </script>
+</body>
+</html>
